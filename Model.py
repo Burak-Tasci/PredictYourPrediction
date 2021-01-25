@@ -29,13 +29,13 @@ def PrepareNumber(number):
 #         temp = input()
 #         w.write(TrainData['8-Digit Number'][i]+","+ temp+"\n")
 
-for i in range(100):
-    print("Tahmin:")
-    print(TrainData['8-Digit Number'][i]+":",end="")
-    TrainData['Answer'][i] = int(input())
+# for i in range(100):
+#     print("Tahmin:")
+#     print(TrainData['8-Digit Number'][i]+":",end="")
+#     TrainData['Answer'][i] = int(input())
 
 
-veriler = TrainData
+veriler = pd.read_csv("training_numbers.csv")
 Ones = []
 for i in range(len(veriler.iloc[:,0])):
     temp = str(veriler.iloc[:,0][i]).count('1')
@@ -78,7 +78,7 @@ Ones_pred = pd.DataFrame(data = Ones_pred,index=range(1),columns = ['OneCount'])
 numbers_pred = pd.DataFrame(data = numbers_pred,columns = ['First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eight'])
 Prediction_X = pd.concat([numbers_pred,Ones_pred],axis = 1)
 
-Prediction_Y = r_dt.predict(Prediction_X)
+Prediction_Y = int(r_dt.predict(Prediction_X))
 
 
 
