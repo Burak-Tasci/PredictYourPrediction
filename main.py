@@ -12,7 +12,7 @@ def getData():
         TRAIN_DATA = pd.DataFrame(data=TRAIN_DATA,index=range(100),columns=['8-Digit Number'])
         TRAIN_DATA['Answer'] = -1
         return TRAIN_DATA, TEST_DATA
-
+    
 def PrepareNumber(number):
     temp = list(number)
     if (len(temp) != 8):
@@ -80,14 +80,16 @@ class Window(QMainWindow):
         self.train_count = 0
         self.test_count = 0
         self.ui.DataInput.setText(self.Train_Data['8-Digit Number'][self.train_count])
+        self.ui.Predict0Btn.setEnabled(False)
+        self.ui.Predict1Btn.setEnabled(False)
         
 
     def data_input_0btn(self):
         Answer = 0
-        self.Train_Data['Answer'][self.count] = Answer
+        self.Train_Data['Answer'][self.train_count] = Answer
         self.train_count +=1
         if self.train_count != 100:
-            self.ui.DataInput.setText(self.Train_Data['8-Digit Number'][self.count])
+            self.ui.DataInput.setText(self.Train_Data['8-Digit Number'][self.train_count])
         else:
             self.ui.DataInput1Btn.setEnabled(False)
             self.ui.DataInput1Btn.setEnabled(False)
@@ -95,10 +97,12 @@ class Window(QMainWindow):
                                         "You've completed data input sequence, you can pass prediction sequence.")
             self.ui.DataInput.setText("Completed!")
             self.ui.Predict.setText(self.Test_Data[self.test_count])
+            self.ui.Predict0Btn.setEnabled(True)
+            self.ui.Predict1Btn.setEnabled(True)
 
     def data_input_1btn(self):
         Answer = 1
-        self.Train_Data['Answer'][self.count] = Answer
+        self.Train_Data['Answer'][self.train_count] = Answer
         self.train_count +=1
         if self.train_count != 100:
             self.ui.DataInput.setText(self.Train_Data['8-Digit Number'][self.train_count])
@@ -109,27 +113,36 @@ class Window(QMainWindow):
                                         "You've completed data input sequence, you can pass prediction sequence.")
             self.ui.DataInput.setText("Completed!")
             self.ui.Predict.setText(self.Test_Data[self.test_count])
+            self.ui.Predict0Btn.setEnabled(True)
+            self.ui.Predict1Btn.setEnabled(True)
+
 
     def predict_0btn(self):
         Answer = 0
         Pred = Prediction(self.Train_Data,self.Test_Data[self.test_count])
+        self.test_count +=1
         if Answer == Pred:
-            QMessageBox.information(self,"Succeed!!!","Your answer:"+Answer+"\nMachine's prediction:"+Pred)
+            response = "Your answer: {answer} \nMachine's prediction: {pred} ".format(answer = Answer,pred = Pred)
+            QMessageBox.information(self,"Succeed!!!",response)
         else:
-            QMessageBox.warning(self,"Unsuccessful :(","Your answer:"+Answer+"\nMachine's prediction:"+Pred)
+            response = "Your answer: {answer} \nMachine's prediction: {pred} ".format(answer = Answer,pred = Pred)
+            QMessageBox.warning(self,"Unsuccessful :(",response)
             
 
     def predict_1btn(self):
         Answer = 1
         Pred = Prediction(self.Train_Data,self.Test_Data[self.test_count])
+        self.test_count +=1
         if Answer == Pred:
-            QMessageBox.information(self,"Succeed!!!","Your answer:"+Answer+"\nMachine's prediction:"+Pred)
+            response = "Your answer: {answer} \nMachine's prediction: {pred} ".format(answer = Answer,pred = Pred)
+            QMessageBox.information(self,"Succeed!!!",response)
         else:
-            QMessageBox.warning(self,"Unsuccessful :(","Your answer:"+Answer+"\nMachine's prediction:"+Pred)
+            response = "Your answer: {answer} \nMachine's prediction: {pred} ".format(answer = Answer,pred = Pred)
+            QMessageBox.warning(self,"Unsuccessful :(",response)
 
     def help(self):
                     QMessageBox.information(self, "Help!",
-                                        "")
+                                        "You need to")
 
 
 app = QApplication([])
