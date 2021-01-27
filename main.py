@@ -141,8 +141,8 @@ class Window(QMainWindow):
             QMessageBox.warning(self,"Unsuccessful :(",response)
 
     def help(self):
-                    QMessageBox.information(self, "Help!",
-                                        "You need to")
+        QMessageBox.information(self, "Help!",
+                                        "Firstly, you need to give input on Data Input 100 times, after that you can predict the number on the below of Data Input like before in Data Input part but this time algorithm will predict with you :D Let's see :) ",)
 
 
 app = QApplication([])
