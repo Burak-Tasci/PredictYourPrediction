@@ -55,9 +55,9 @@ def Prediction(TrainData,TestData):
     X = veriler.iloc[:,:-1].values
     Y = veriler.iloc[:,-1:].values
     
-    from sklearn.tree import DecisionTreeRegressor
+    from sklearn.tree import DecisionTreeClassifier
     
-    r_dt = DecisionTreeRegressor(random_state=0)
+    r_dt = DecisionTreeClassifier(criterion="entropy")
     r_dt.fit(X,Y)
     
     numbers_pred = np.array(PrepareNumber(TestData)).reshape(-1,8).astype('int64')
